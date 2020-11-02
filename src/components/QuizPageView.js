@@ -1,76 +1,37 @@
 
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Apprentice_TandemFor400_Data from '../components/data/Apprentice_TandemFor400_Data.json'
 import '../App.css'
-export default function QuizViewPage() {
-
-	let formattedData = []
-	const questionLengs = 0
-	for (let i = 0; i < Apprentice_TandemFor400_Data.length; i++ ){
 
 
-		// console.log(Apprentice_TandemFor400_Data[i].question)
-		// let correct = Apprentice_TandemFor400_Data[i].correct
-		// Apprentice_TandemFor400_Data[i].incorrect.push(Apprentice_TandemFor400_Data[i].correct)
-		// console.log(Apprentice_TandemFor400_Data[i].incorrect)
-		// console.log(Apprentice_TandemFor400_Data[i].correct)
-		// formattedData.push(Apprentice_TandemFor400_Data[i].correct)
-		// formattedData.push(Apprentice_TandemFor400_Data[i].incorrect)
-		let temp = Apprentice_TandemFor400_Data[i].incorrect.concat(Apprentice_TandemFor400_Data[i].correct)
-		formattedData.push(temp)
-		// for (let j = 0; j < Apprentice_TandemFor400_Data[i].incorrect.lenght; j++){
-		// 	formattedData.push(Apprentice_TandemFor400_Data[i].incorrect[j])
-		// }
+// Fisher-Yates shuffle algorithm
+function shuffle(a) {
+	let j, x, i;
+	for (i = a.length -1; i > 0; i --){
+		j = Math.floor(Math.random() * (i + 1));
+		x = a[i];
+		a[i] = a[j];
+		a[j] = x
 	}
-	console.log(formattedData)
+	return a
+}
+
+let formattedData = []
+for (let i = 0; i < Apprentice_TandemFor400_Data.length; i++ ){
+
+	let temp = shuffle(Apprentice_TandemFor400_Data[i].incorrect.concat(Apprentice_TandemFor400_Data[i].correct))
+	formattedData.push(temp)
+}
 
 
-
-	const questions = [
-		{
-			questionText: 'What is the capital of France?',
-			answerOptions: [
-				{ answerText: 'New York', isCorrect: false },
-				{ answerText: 'London', isCorrect: false },
-				{ answerText: 'Paris', isCorrect: true },
-				{ answerText: 'Dublin', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'Who is CEO of Tesla?',
-			answerOptions: [
-				{ answerText: 'Jeff Bezos', isCorrect: false },
-				{ answerText: 'Elon Musk', isCorrect: true },
-				{ answerText: 'Bill Gates', isCorrect: false },
-				{ answerText: 'Tony Stark', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'The iPhone was created by which company?',
-			answerOptions: [
-				{ answerText: 'Apple', isCorrect: true },
-				{ answerText: 'Intel', isCorrect: false },
-				{ answerText: 'Amazon', isCorrect: false },
-				{ answerText: 'Microsoft', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-	];
+export default function QuizViewPage() {
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [showScore, setShowScore] = useState(false);
 	const [score, setScore] = useState(0);
 
-	const handleAnswerOptionClick = (isCorrect) => {
-		if (isCorrect) {
+	const handleAnswerOptionClick = (isCorrect, choice) => {
+		if (isCorrect === choice) {
 			setScore(score + 1);
 		}
 
@@ -97,7 +58,7 @@ export default function QuizViewPage() {
 					</div>
 					<div className='answer-section'>
 						{formattedData[currentQuestion].map((answerOption) => (
-							<button onClick={() => handleAnswerOptionClick(answerOption)}>{answerOption}</button>
+							<button onClick={() => handleAnswerOptionClick(answerOption, Apprentice_TandemFor400_Data[currentQuestion].correct)}>{answerOption}</button>
 						))}
 					</div>
 				</>
