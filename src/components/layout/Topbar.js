@@ -25,10 +25,7 @@ const TopBar = ({ className, ...rest }) => {
       {...rest}
     >
       <Toolbar className={classes.toolbar}>
-        <RouterLink to="/">
-      A
-        </RouterLink>
-        Quiz
+        Welcome! Test your trivia knowledge below.
       </Toolbar>
     </AppBar>
   );

@@ -2,6 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import Apprentice_TandemFor400_Data from '../components/data/Apprentice_TandemFor400_Data.json'
 import '../App.css'
+import TopBar from "./layout/Topbar";
 
 
 // Fisher-Yates shuffle algorithm
@@ -44,6 +45,7 @@ export default function QuizViewPage() {
 	};
 	return (
 		<div className='app'>
+			<TopBar/>
 			{showScore ? (
 				<div className='score-section'>
 					You scored {score} out of {Apprentice_TandemFor400_Data.length}
